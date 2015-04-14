@@ -9,10 +9,10 @@
 #' @param max_signal The maximum signal size.
 #' @export
 
-bind_counter_data <- function(path_to_folder, no_channels, site, year, max_signal) {
-  
-  library(plyr)
-  library(dplyr)
+
+bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_signal) {
+  #path_to_folder use current wd() if not specified. Make sure it works.  
+  #add in metadata to the output file. e.g., number of channels, site name, etc.
   
   if(missing(site)) {
     site <- ""
@@ -24,7 +24,7 @@ bind_counter_data <- function(path_to_folder, no_channels, site, year, max_signa
   counter.paths <- dir(path_to_folder, full.names = TRUE)
   names(counter.paths) <- basename(counter.paths)
   
-  counter.data1 <- ldply(counter.paths, 
+  counter.data1 <- plyr::ldply(counter.paths, 
                        read.table, 
                        header=FALSE, 
                        sep="", 
@@ -48,7 +48,7 @@ bind_counter_data <- function(path_to_folder, no_channels, site, year, max_signa
   
   date.alt <- strptime(counter.data2$date, '%d/%m/%y')
   counter.data2$jday <- date.alt$yday
-  counter.data3 <- subset(counter.data2, jday != "NA")
+  counter.data3 <- subset(counter.data2, jday != "NA")#check to see if I need to convert to jday
   
   counter.data4 <- data.frame("file"=counter.data3$file, 
       "date.time"=as.character(as.POSIXlt(strptime(paste(counter.data3$date, 
@@ -68,7 +68,9 @@ bind_counter_data <- function(path_to_folder, no_channels, site, year, max_signa
   counter.data6 <- counter.data5[!duplicated(counter.data5[, c(2, 6)]), ]
   # removes any duplicate data
   
-  counter.data7 <- subset(counter.data6, signal <= max_signal)
+  counter.data7 <- subset(counter.data6, signal <= max_signal)#filter_ 
+  #counter.data7 <- filter_(counter.data6, ~signal <= max_signal)#filter_ 
+  
   # gets rid of levels that have been subseted out. 
   
   counter.data <- droplevels(counter.data7)
@@ -85,4 +87,5 @@ bind_counter_data <- function(path_to_folder, no_channels, site, year, max_signa
                        ".csv", 
                        sep=""), 
             row.names=FALSE)
+  #invisible(coutner.data[,-2])
 }

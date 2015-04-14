@@ -8,24 +8,17 @@
 #' @keywords Histogram
 #' @export
 
-hist_records <- function(dataset, day_one, site, year) {
-  library(plyr)
-  library(dplyr)
-  
-  if(missing(site)) {
-    site <- ""
-  }
-  if(missing(year)) {
-    year <- ""
-  }
+hist_records <- function(dataset, day_one=NULL, site="", year=NULL) {
   
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
-  if(missing(day_one)) {
+  if(is.null(day_one)) {
     day_one <- min(dataset$jday)
   }
-  d1 <- filter(dataset, jday >= day_one)
-  d <- select(d1, channel, description, signal)
   
+  d1 <- dplyr::filter_(dataset, jday >= day_one)
+  d <- dplyr::select(d1, channel, description, signal)
+  
+  # get rid of pdf function.
   pdf(paste(getwd(), site, year, "EventsbyChannel.pdf", sep = ""),
       height = 10,
       width = 10)
@@ -37,11 +30,11 @@ hist_records <- function(dataset, day_one, site, year) {
       yaxs = "i",
       cex = 1.5)
   
-  no.events <- ddply(filter(d, description == "E"), c("channel"), function(x) {
+  no_events <- plyr::ddply(filter(d, description == "E"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
-    no.events <- length(x$signal)
-    data.frame(no.events)
+    no_events <- length(x$signal)
+    data.frame(no_events)
   }
   )
   
@@ -66,11 +59,11 @@ hist_records <- function(dataset, day_one, site, year) {
       yaxs = "i", 
       cex = 1.5)
   
-  no.up <- ddply(filter(d, description == "U"), c("channel"), function(x) {
+  no_up <- plyr::ddply(filter_(d, description == "U"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
-    no.up <- length(x$signal)
-    data.frame(no.up)
+    no_up <- length(x$signal)
+    data.frame(no_up)
   }
   )
   
@@ -80,7 +73,7 @@ hist_records <- function(dataset, day_one, site, year) {
         las = 0,
         cex = 1.5)
   dev.off()
-  print(no.up)
+  print(no_up)
   
   pdf(paste(getwd(), site, year, "DownsbyChannel.pdf", sep = ""),
       height = 10, 
@@ -93,11 +86,11 @@ hist_records <- function(dataset, day_one, site, year) {
       yaxs = "i",
       cex = 1.5)
   
-  no.down <- ddply(filter(d, description == "D"), c("channel"), function(x) {
+  no_down <- plyr::ddply(filter_(d, description == "D"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
-    no.down <- length(x$signal)
-    data.frame(no.down)
+    no_down <- length(x$signal)
+    data.frame(no_down)
   }
   )
   
@@ -107,5 +100,5 @@ hist_records <- function(dataset, day_one, site, year) {
         las = 0,
         cex = 1.5)
   dev.off()
-  print(no.down)
+  print(no_down)
 }
