@@ -35,8 +35,8 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       las = 1, 
       xaxs = "i", 
       yaxs = "i",
-      cex = 1.5,
-      ask=TRUE)
+      cex = 1.5)
+  devAskNewPage(ask = TRUE)
   readline(prompt = "Pause. Press <Enter> to continue...")
   
   no_events <- plyr::ddply(filter_(d, ~description == "E"), c("channel"), function(x) {
