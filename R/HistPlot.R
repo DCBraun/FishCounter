@@ -8,15 +8,15 @@
 #' @keywords Histogram
 #' @export
 
-hist_records <- function(dataset, day_one=NULL, site="", year=NULL) {
+hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
     day_one <- min(dataset$jday)
   }
-  if(is.null(day_one)) {
-    day_one <- min(dataset$jday)
-  }
+  # if(is.null(year)) {
+  #   year <- min(dataset$jday)
+  # }
   
   d1 <- dplyr::filter(dataset, jday >= day_one)
   d <- dplyr::select(d1, channel, description, signal)
