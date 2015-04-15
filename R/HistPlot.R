@@ -9,7 +9,11 @@
 #' @export
 
 hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL) {
-  record_type <- direction
+  if(missing(direction)) {
+    warning("Need to specify the direction")
+  }
+    
+    record_type <- direction
   if(direction=="E"){
     direction_lab <- "EVENTS"
   }
