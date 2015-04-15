@@ -7,18 +7,18 @@ bind individual data files, clean up data, and return a master data file.
 A function to bind and process Logie counter data
 This function allows you to bind together mulitple counter data files, remove errors and produce a master datafile.}
 \usage{
-bind_counter_data(path.to.folder, no.channels, site, year, max.signal)
+bind_counter_data(path_to_folder = ".", no_channels, site, year, max_signal)
 }
 \arguments{
-\item{path.to.folder}{This is the file path for the folder that contains all data files for processing.}
+\item{path_to_folder}{This is the file path for the folder that contains all data files for processing.}
 
-\item{no.channels}{This is the number of counter channels that were operated.}
+\item{no_channels}{This is the number of counter channels that were operated.}
 
 \item{site}{Name of the study river.}
 
 \item{year}{Year of counter operation.}
 
-\item{max.signal}{The maximum signal size.}
+\item{max_signal}{The maximum signal size.}
 }
 \description{
 bind_counter_data

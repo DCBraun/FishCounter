@@ -6,16 +6,16 @@
 A function to bind and process Logie signal data
 This function allows you to bind together mulitple signal data files, remove errors and produce a master datafile.}
 \usage{
-bind_signal_data(path.to.folder, site, year, max.signal)
+bind_signal_data(path_to_folder, site, year, max_signal)
 }
 \arguments{
-\item{path.to.folder}{This is the file path for the folder that contains all data files for processing.}
+\item{path_to_folder}{This is the file path for the folder that contains all data files for processing.}
 
 \item{site}{Name of the study river.}
 
 \item{year}{Year of counter operation.}
 
-\item{max.signal}{The maximum signal size.}
+\item{max_signal}{The maximum signal size.}
 }
 \description{
 bind_signal_data

@@ -2,6 +2,7 @@
 
 export(bind_counter_data)
 export(bind_signal_data)
+export(hist_all_records)
 export(hist_records)
 export(plot_abundance)
 export(plot_events)

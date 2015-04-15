@@ -4,7 +4,7 @@
 \alias{plot_pss_date}
 \title{A function that plots the peak signal size (PSS) by date and time per hour of Logie counter data}
 \usage{
-plot_pss_date(dataset, day_one, site, year, low.thresh, up.thresh)
+plot_pss_date(dataset, day_one, site, year, low_thresh, up_thresh)
 }
 \arguments{
 \item{dataset}{This is the dataset used to create the plots.}
