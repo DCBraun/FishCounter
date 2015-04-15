@@ -33,16 +33,14 @@ hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL)
   d1 <- dplyr::filter_(dataset, ~jday >= day_one)
   d <- dplyr::select(d1, channel, description, signal)
   
-  par_ops <- list(mfrow = c(length(unique(d$channel)), 1), 
+  dev.new()
+  par(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
       las = 1, 
       xaxs = "i", 
       yaxs = "i", 
-      cex = 1.5)
-  
-  dev.new()
-  par(par_ops)
+      cex = 1.5))
 
   records <- plyr::ddply(filter_(d, ~description == record_type), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
