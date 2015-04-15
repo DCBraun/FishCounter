@@ -58,3 +58,4 @@ hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL)
         cex = 1.5)
   
   print(records)
+}

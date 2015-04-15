@@ -4,7 +4,7 @@
 \alias{hist_records}
 \title{A function that plots histograms of Logie counter data}
 \usage{
-hist_records(dataset, day_one = NULL, site = NULL, year = NULL)
+hist_records(dataset, direction, day_one = NULL, site = NULL, year = NULL)
 }
 \arguments{
 \item{dataset}{This is the dataset used to create the histograms.}
