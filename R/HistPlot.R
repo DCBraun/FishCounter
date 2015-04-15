@@ -68,6 +68,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       xaxs = "i", 
       yaxs = "i", 
       cex = 1.5)
+  devAskNewPage(ask = TRUE)
   
   no_up <- plyr::ddply(filter_(d, ~description == "U"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
@@ -96,6 +97,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       xaxs = "i", 
       yaxs = "i",
       cex = 1.5)
+  devAskNewPage(ask = TRUE)
   
   no_down <- plyr::ddply(filter_(d, ~description == "D"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
