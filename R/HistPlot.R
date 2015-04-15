@@ -50,7 +50,7 @@ hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL)
   }
   )
   
-  mtext(paste("Frequency of ", direction_lab, " signal sizes", 
+  mtext(paste("Frequency of ", direction_lab, " signal sizes"), 
         side = 2, 
         outer = TRUE, 
         las = 0,
