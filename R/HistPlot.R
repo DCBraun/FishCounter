@@ -47,7 +47,7 @@ hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL)
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
     count <- length(x$signal)
-    data.frame(direction_lab=count)
+    data.frame(count)
   }
   )
   
