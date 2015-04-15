@@ -28,6 +28,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   #pdf(paste(getwd(),"/", site, year, "EventsbyChannel.pdf", sep = ""),
   #    height = 10,
   #    width = 10)
+  dev.new()
   par(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
@@ -37,7 +38,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       cex = 1.5,
       ask=TRUE)
   readline(prompt = "Pause. Press <Enter> to continue...")
-  dev.new()
+  
   no_events <- plyr::ddply(filter_(d, ~description == "E"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
@@ -59,6 +60,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   #pdf(paste(getwd(),"/", site, year, "UpsbyChannel.pdf", sep = ""),
   #    height = 10,
   #    width = 10)
+  dev.new()
   par(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
@@ -66,7 +68,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       xaxs = "i", 
       yaxs = "i", 
       cex = 1.5)
-  dev.new()
+  
   no_up <- plyr::ddply(filter_(d, ~description == "U"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
@@ -86,6 +88,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   #pdf(paste(getwd(),"/", site, year, "DownsbyChannel.pdf", sep = ""),
   #    height = 10, 
   #    width = 10)
+  dev.new()
   par(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
@@ -93,7 +96,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       xaxs = "i", 
       yaxs = "i",
       cex = 1.5)
-  dev.new()
+  
   no_down <- plyr::ddply(filter_(d, ~description == "D"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
