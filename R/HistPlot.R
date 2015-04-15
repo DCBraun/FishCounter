@@ -25,9 +25,9 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   d <- dplyr::select(d1, channel, description, signal)
   
   # get rid of pdf function.
-  pdf(paste(getwd(),"/", site, year, "EventsbyChannel.pdf", sep = ""),
-      height = 10,
-      width = 10)
+  #pdf(paste(getwd(),"/", site, year, "EventsbyChannel.pdf", sep = ""),
+  #    height = 10,
+  #    width = 10)
   par(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
@@ -50,13 +50,13 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
         las = 0,
         cex = 1.5)
   
-  dev.off()
+  #dev.off()
   
   print(no_events)
   
-  pdf(paste(getwd(),"/", site, year, "UpsbyChannel.pdf", sep = ""),
-      height = 10,
-      width = 10)
+  #pdf(paste(getwd(),"/", site, year, "UpsbyChannel.pdf", sep = ""),
+  #    height = 10,
+  #    width = 10)
   par(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
@@ -78,12 +78,12 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
         outer = TRUE, 
         las = 0,
         cex = 1.5)
-  dev.off()
+  #dev.off()
   print(no_up)
   
-  pdf(paste(getwd(),"/", site, year, "DownsbyChannel.pdf", sep = ""),
-      height = 10, 
-      width = 10)
+  #pdf(paste(getwd(),"/", site, year, "DownsbyChannel.pdf", sep = ""),
+  #    height = 10, 
+  #    width = 10)
   par(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
@@ -105,6 +105,6 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
         outer = TRUE, 
         las = 0,
         cex = 1.5)
-  dev.off()
+  #dev.off()
   print(no_down)
 }
