@@ -77,6 +77,7 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
   # gets rid of levels that have been subseted out. 
   
   counter.data <- counter.data[order(counter.data$date.time), ]
+  counter.data <- data.frame(site, counter.data)
   # Now write a new text file with only the graphics data. 
   # The row names, column names and quotes must be removed.
   
