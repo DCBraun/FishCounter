@@ -10,8 +10,7 @@
 
 hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL) {
   if(missing(direction)) {
-    stop(Need to specify the direction as character: U, D, E))
-    #message(paste("Need to specify the direction, options are:", "U", "D", "E"))
+    stop(paste("Need to specify the direction as character:", "U", "D", "E"))
   }
     
     record_type <- direction
