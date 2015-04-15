@@ -8,8 +8,17 @@
 #' @keywords Histogram
 #' @export
 
-hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
-  
+hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL) {
+  record_type <- direction
+  if(direction=="E"){
+    direction_lab <- "EVENTS"
+  }
+  if(direction=="U"){
+    direction_lab <- "UP"
+  }
+  if(direction=="D"){
+    direction_lab <- "DOWN"
+  }
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
     day_one <- min(dataset$jday)
@@ -24,7 +33,6 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   d1 <- dplyr::filter_(dataset, ~jday >= day_one)
   d <- dplyr::select(d1, channel, description, signal)
   
-  
   par_ops <- list(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
@@ -33,79 +41,21 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       yaxs = "i", 
       cex = 1.5)
   
-  # get rid of pdf function.
-  #pdf(paste(getwd(),"/", site, year, "EventsbyChannel.pdf", sep = ""),
-  #    height = 10,
-  #    width = 10)
   dev.new()
   par(par_ops)
 
-  no_events <- plyr::ddply(filter_(d, ~description == "E"), c("channel"), function(x) {
+  records <- plyr::ddply(filter_(d, ~description == record_type), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
-    no_events <- length(x$signal)
-    data.frame(no_events)
+    records <- length(x$signal)
+    data.frame(records)
   }
   )
   
-  mtext("Frequency of EVENT signal sizes", 
+  mtext(paste("Frequency of ", direction_lab, " signal sizes", 
         side = 2, 
         outer = TRUE, 
         las = 0,
         cex = 1.5)
   
-  #dev.off()
-  
-  print(no_events)
-  
-  #pdf(paste(getwd(),"/", site, year, "UpsbyChannel.pdf", sep = ""),
-  #    height = 10,
-  #    width = 10)
-  
-  dev.new()
-  #par(mfrow = c(length(unique(d$channel)), 1), 
-  #    mar = c(4, 3, 1, 1), 
-  #    oma = c(2, 2, 0.5, 0), 
-  #    las = 1, 
-  #    xaxs = "i", 
-  #    yaxs = "i", 
-  #    cex = 1.5)
-  par(par_ops)
-  no_up <- plyr::ddply(filter_(d, ~description == "U"), c("channel"), function(x) {
-    hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
-         xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
-    no_up <- length(x$signal)
-    data.frame(no_up)
-  }
-  )
-  
-  mtext("Frequency of UP signal sizes", 
-        side = 2, 
-        outer = TRUE, 
-        las = 0,
-        cex = 1.5)
-  #dev.off()
-  print(no_up)
-  
-  #pdf(paste(getwd(),"/", site, year, "DownsbyChannel.pdf", sep = ""),
-  #    height = 10, 
-  #    width = 10)
-  dev.new()
-  par(par_ops)
-  
-  no_down <- plyr::ddply(filter_(d, ~description == "D"), c("channel"), function(x) {
-    hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
-         xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
-    no_down <- length(x$signal)
-    data.frame(no_down)
-  }
-  )
-  
-  mtext("Frequency of DOWN signal sizes", 
-        side = 2, 
-        outer = TRUE, 
-        las = 0,
-        cex = 1.5)
-  #dev.off()
-  print(no_down)
-}
+  print(records)
