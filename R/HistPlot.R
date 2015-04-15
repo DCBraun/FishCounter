@@ -59,15 +59,15 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   #pdf(paste(getwd(),"/", site, year, "UpsbyChannel.pdf", sep = ""),
   #    height = 10,
   #    width = 10)
-  devAskNewPage(ask = TRUE)
+  
   dev.new()
-  par(mfrow = c(length(unique(d$channel)), 1), 
-      mar = c(4, 3, 1, 1), 
-      oma = c(2, 2, 0.5, 0), 
-      las = 1, 
-      xaxs = "i", 
-      yaxs = "i", 
-      cex = 1.5)
+  #par(mfrow = c(length(unique(d$channel)), 1), 
+  #    mar = c(4, 3, 1, 1), 
+  #    oma = c(2, 2, 0.5, 0), 
+  #    las = 1, 
+  #    xaxs = "i", 
+  #    yaxs = "i", 
+  #    cex = 1.5)
   
   no_up <- plyr::ddply(filter_(d, ~description == "U"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
