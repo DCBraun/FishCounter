@@ -13,7 +13,8 @@ hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL)
     stop(paste("Need to specify the direction as character:", "U", "D", "E"))
   }
     
-    record_type <- direction
+  record_type <- direction
+  
   if(direction=="E"){
     direction_lab <- "EVENTS"
   }
@@ -23,6 +24,7 @@ hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL)
   if(direction=="D"){
     direction_lab <- "DOWN"
   }
+  
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
     day_one <- min(dataset$jday)
