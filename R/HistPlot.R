@@ -18,7 +18,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   #   year <- min(dataset$jday)
   # }
   
-  d1 <- dplyr::filter(dataset, jday >= day_one)
+  d1 <- dplyr::filter_(dataset, ~jday >= day_one)
   d <- dplyr::select(d1, channel, description, signal)
   
   # get rid of pdf function.
@@ -33,7 +33,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       yaxs = "i",
       cex = 1.5)
   
-  no_events <- plyr::ddply(filter(d, description == "E"), c("channel"), function(x) {
+  no_events <- plyr::ddply(filter_(d, ~description == "E"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
     no_events <- length(x$signal)
@@ -49,7 +49,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   
   dev.off()
   
-  print(no.events)
+  print(no_events)
   
   pdf(paste(getwd(), site, year, "UpsbyChannel.pdf", sep = ""),
       height = 10,
@@ -62,7 +62,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       yaxs = "i", 
       cex = 1.5)
   
-  no_up <- plyr::ddply(filter_(d, description == "U"), c("channel"), function(x) {
+  no_up <- plyr::ddply(filter_(d, ~description == "U"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
     no_up <- length(x$signal)
@@ -89,7 +89,7 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
       yaxs = "i",
       cex = 1.5)
   
-  no_down <- plyr::ddply(filter_(d, description == "D"), c("channel"), function(x) {
+  no_down <- plyr::ddply(filter_(d, ~description == "D"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
     no_down <- length(x$signal)
