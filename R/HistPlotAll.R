@@ -2,9 +2,9 @@
 #'
 #' This function plots historgrams of up, down and event counts for Logie counter data by channel
 #' @param dataset This is the dataset used to create the histograms.
-#' @param day_one This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
-#' @param site Name of the study river.
-#' @param year Year of counter operation.
+#' @param day_one This is the first day of the dataset you want to use, defaults to the first day found in the dataset. This parameter needs to be specified in julian day format.
+#' @param site Name of the study river, defaults to the name in the site column.
+#' @param year Year of counter operation, defaults to the year found in the first row of the date column.
 #' @keywords Histogram
 #' @export
 
