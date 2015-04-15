@@ -9,7 +9,7 @@
 #' @export
 
 hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL) {
-=  if(missing(direction)) {
+  if(missing(direction)) {
     message("Need to specify the direction, options are: "U", "D", "E"")
   }
     
