@@ -40,7 +40,7 @@ hist_records <- function(dataset, direction, day_one=NULL, site=NULL, year=NULL)
       las = 1, 
       xaxs = "i", 
       yaxs = "i", 
-      cex = 1.5))
+      cex = 1.5)
 
   records <- plyr::ddply(filter_(d, ~description == record_type), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
