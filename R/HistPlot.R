@@ -15,10 +15,10 @@ hist_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
     day_one <- min(dataset$jday)
   }
   if(is.null(site)) {
-    site <- dataset$site[1])
+    site <- as.character(dataset$site[1])
   }
    if(is.null(year)) {
-     year <- strptime(dataset$date[1], '%Y-%m-%d')$year
+     year <- substring(as.character(dataset$date[1]), first = 1, last = 4)
   }
   
   d1 <- dplyr::filter_(dataset, ~jday >= day_one)
