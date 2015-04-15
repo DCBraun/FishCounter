@@ -81,7 +81,7 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
   # Now write a new text file with only the graphics data. 
   # The row names, column names and quotes must be removed. 
   
-  write.csv(x=counter.data[, -3], 
+  write.csv(x=counter.data, 
             file=paste(path_to_folder,
                        site, 
                        year,
