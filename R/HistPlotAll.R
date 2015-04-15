@@ -23,8 +23,7 @@ hist_all_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   
   d1 <- dplyr::filter_(dataset, ~jday >= day_one)
   d <- dplyr::select(d1, channel, description, signal)
-  
-  
+  ################
   par_ops <- list(mfrow = c(length(unique(d$channel)), 1), 
                   mar = c(4, 3, 1, 1), 
                   oma = c(2, 2, 0.5, 0), 
@@ -33,13 +32,8 @@ hist_all_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
                   yaxs = "i", 
                   cex = 1.5)
   
-  # get rid of pdf function.
-  #pdf(paste(getwd(),"/", site, year, "EventsbyChannel.pdf", sep = ""),
-  #    height = 10,
-  #    width = 10)
   dev.new()
   par(par_ops)
-  
   no_events <- plyr::ddply(filter_(d, ~description == "E"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
          xlab = paste("Channel ", x$channel[1], sep = ""), col = "grey60")
@@ -54,22 +48,9 @@ hist_all_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
         las = 0,
         cex = 1.5)
   
-  #dev.off()
-  
   print(no_events)
-  
-  #pdf(paste(getwd(),"/", site, year, "UpsbyChannel.pdf", sep = ""),
-  #    height = 10,
-  #    width = 10)
-  
+  ################
   dev.new()
-  #par(mfrow = c(length(unique(d$channel)), 1), 
-  #    mar = c(4, 3, 1, 1), 
-  #    oma = c(2, 2, 0.5, 0), 
-  #    las = 1, 
-  #    xaxs = "i", 
-  #    yaxs = "i", 
-  #    cex = 1.5)
   par(par_ops)
   no_up <- plyr::ddply(filter_(d, ~description == "U"), c("channel"), function(x) {
     hist(x$signal, breaks = seq(0, 130, 5), xlim = c(0, 130), main = "", ylab = "", 
@@ -84,12 +65,8 @@ hist_all_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
         outer = TRUE, 
         las = 0,
         cex = 1.5)
-  #dev.off()
   print(no_up)
-  
-  #pdf(paste(getwd(),"/", site, year, "DownsbyChannel.pdf", sep = ""),
-  #    height = 10, 
-  #    width = 10)
+  ################
   dev.new()
   par(par_ops)
   
@@ -106,6 +83,5 @@ hist_all_records <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
         outer = TRUE, 
         las = 0,
         cex = 1.5)
-  #dev.off()
   print(no_down)
 }
