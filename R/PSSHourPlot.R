@@ -64,6 +64,4 @@ plot_pss_hour<-function(dataset, day_one=NULL, site=NULL, year=NULL,
         line = 3, 
         outer = FALSE, 
         cex = 1.5)
-  
-  dev.off()
 }
