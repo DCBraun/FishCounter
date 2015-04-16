@@ -38,10 +38,7 @@ plot_events <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   
   r <- range(events_hour_channel$date_time_alt)
   
-  pdf(paste(getwd(), site, year, "EventsbyChannelandHour.pdf", sep = ""),
-      height = 10,
-      width = 10)
-  
+  dev.new()
   par(mfrow = c(length(unique(events_hour1$channel)), 1), 
       mar = c(4, 2, 0.5, 2), 
       oma = c(2, 4, 0.5, 2),
@@ -91,6 +88,4 @@ plot_events <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
         cex = 1.5)
   
   print(events_hour_ch)
-  
-  dev.off()
 }
