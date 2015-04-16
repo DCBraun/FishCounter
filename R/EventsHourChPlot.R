@@ -30,7 +30,7 @@ plot_events <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   events_hour1$date_alt      <- NULL
   events_hour1$jday          <- NULL
   
-  events_hour.channel <- plyr::ddply(events_hour1, c("date_time_alt", "channel"), 
+  events_hour_channel <- plyr::ddply(events_hour1, c("date_time_alt", "channel"), 
                                summarize, no_events = sum(no))
   
   events_hour_channel$date_time_alt <- as.POSIXct(strptime(events_hour_channel$date_time_alt, 
