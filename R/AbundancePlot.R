@@ -19,7 +19,7 @@ plot_abundance <- function(dataset, day_one) {
   dataset$date_time <- strptime(paste(dataset$date, dataset$time, sep=" "), 
                                 "%Y-%m-%d %H:%M:%S")
   
-  dataset$date.time <- as.POSIXct(round(dataset$date_time, "day"))
+  dataset$date_time <- as.POSIXct(round(dataset$date_time, "day"))
   
   updata <- data.frame(dplyr::filter_(dataset, ~description == "U"), count = 1) 
   updata$cummulative_count <- cumsum(updata$count)
