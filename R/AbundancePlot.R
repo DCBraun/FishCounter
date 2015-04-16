@@ -24,7 +24,7 @@ plot_abundance <- function(dataset, day_one) {
   updata <- data.frame(dplyr::filter_(dataset, ~description == "U"), count = 1) 
   updata$cummulative_count <- cumsum(updata$count)
   
-  up <- plyr::ddply(updata, c("date.time"), summarize, 
+  up <- plyr::ddply(updata, c("date_time"), summarize, 
               daily_count = sum(count), 
               count = max(cummulative_count))
   dev.new()
