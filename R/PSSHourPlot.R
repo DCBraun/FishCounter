@@ -10,44 +10,40 @@
 #' @keywords Events
 #' @export
 
-plot_pss_hour<-function(dataset, day_one, site, year, low_thresh, up_thresh) {
+plot_pss_hour<-function(dataset, day_one=NULL, site=NULL, year=NULL, 
+                        low_thresh=NULL, up_thresh=NULL) {
   
-  if(missing(low_thresh)) {
+  if(is.null(low_thresh)) {
     low_thresh <- 0
   }
-  if(missing(up_thresh)) {
+  if(is.null(up_thresh)) {
     up_thresh <- 130
   }
-  if(missing(site)) {
+  if(is.null(site)) {
     site <- ""
   }
-  if(missing(year)) {
+  if(is.null(year)) {
     year <- ""
   }
   
-  dataset$date.alt <- strptime(dataset$date, '%Y-%m-%d')
-  dataset$jday     <- dataset$date.alt$yday
-  
-  if(missing(day_one)) {
+  dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
+  if(is.null(day_one)) {
     day_one <- min(dataset$jday)
   }
   
-  dataset          <- subset(dataset, jday >= day_one)
+  dataset          <- dplyr::filter_(dataset, ~jday >= day_one)
   dataset$jday     <- NULL
-  dataset$date.alt <- NULL
+  dataset$date_alt <- NULL
   dataset$hour     <- strptime(dataset$time, format = "%H:%M:%S")
   dataset$hour     <- as.POSIXct(round(dataset$hour, "mins"))
   
-  pdf(paste(getwd(), "PeakSignalSizebyHour", site, year, ".pdf", sep = ""), 
-      height = 10,
-      width = 10)
-  
+  dev.new()
   par(mfrow = c(1, 1), 
       mar = c(2, 2, 2, 2), 
       oma = c(2, 2, 2, 2),
       cex = 1.5)
   
-  plot(signal ~ hour, data = subset(dataset, description == "U"),
+  plot(signal ~ hour, data = dplyr::filter_(dataset, ~description == "U"),
        col = "#00000010", pch = 19, cex = 1.5, axes = FALSE, las = 1, 
        xlab = "", ylab = "", ylim = c(low_thresh, up_thresh))
   

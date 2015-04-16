@@ -22,9 +22,9 @@ plot_events <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
     day_one <- min(dataset$jday)
   }
   
-  d1 <- filter_(dataset, ~jday >= day_one)
+  d1 <- dplyr::filter_(dataset, ~jday >= day_one)
   
-  events_hour1               <- data.frame(filter_(d1, ~description == "E"), no = 1)
+  events_hour1               <- data.frame(dplyr::filter_(d1, ~description == "E"), no = 1)
   events_hour1$date_time_alt <- as.character(as.POSIXct(strptime(paste(events_hour1$date, 
                                   events_hour1$time,sep = " "), '%Y-%m-%d %H')))
   events_hour1$date_alt      <- NULL
