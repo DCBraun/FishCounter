@@ -30,7 +30,7 @@ plot_abundance <- function(dataset, day_one) {
   dev.new()
   par(mfrow = c(2, 1), 
       mar = c(0, 2, 0, 2), 
-      oma = c(4, 2, 2, 2))
+      oma = c(6, 2, 2, 1))
   
   plot(daily_count ~ date_time, data = up, 
        pch = 19, 
