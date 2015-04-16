@@ -3,14 +3,12 @@
 #' This function plots the PSS by day and time for Logie counter data
 #' @param dataset This is the dataset used to create the plots.
 #' @param day_one This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
-#' @param site Name of the study river.
-#' @param year Year of counter operation.
 #' @param low_thresh is the counters lower threshold PSS value.
 #' @param up_thresh is the counters upper threshold PSS value.
 #' @keywords Events
 #' @export
 
-plot_pss_date <- function(dataset, day_one=NULL, site=NULL, year=NULL, low_thresh=NULL, up_thresh=NULL) {
+plot_pss_date <- function(dataset, day_one=NULL, low_thresh=NULL, up_thresh=NULL) {
   
   if(is.null(low_thresh)) {
     low_thresh <- 0
@@ -18,13 +16,6 @@ plot_pss_date <- function(dataset, day_one=NULL, site=NULL, year=NULL, low_thres
   if(is.null(up_thresh)) {
     up_thresh <- 130
   }
-  if(is.null(site)) {
-    site <- ""
-  }
-  if(is.null(year)) {
-    year <- ""
-  }
-  
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
     day_one <- min(dataset$jday)

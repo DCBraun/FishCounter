@@ -3,20 +3,12 @@
 #' This function plots the number of events per hour channel and day for Logie counter data by channel
 #' @param data This is the dataset used to create the plots.
 #' @param day_one This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
-#' @param site Name of the study river.
-#' @param year Year of counter operation.
 #' @return Generates three .pdf files with histograms of peak signal size for up counts, down counts and events for each counter channel.
 #' @keywords Events
 #' @export
 
-plot_events <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
-  
-  if(is.null(site)) {
-    site <- as.character(dataset$site[1])
-  }
-  if(is.null(year)) {
-    year <- ""
-  }
+plot_events <- function(dataset, day_one=NULL) {
+
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
     day_one <- min(dataset$jday)
