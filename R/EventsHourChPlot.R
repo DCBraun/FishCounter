@@ -9,19 +9,16 @@
 #' @keywords Events
 #' @export
 
-plot_events <- function(dataset, day_one, site, year) {
+plot_events <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
   
-  if(missing(site)) {
-    site <- ""
+  if(is.null(site)) {
+    site <- as.character(dataset$site[1])
   }
-  if(missing(year)) {
+  if(is.null(year)) {
     year <- ""
   }
-  
-  dataset$date_alt  <- strptime(dataset$date, '%Y-%m-%d')
-  dataset$jday      <- dataset$date_alt$yday
-
-  if(missing(day_one)) {
+  dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
+  if(is.null(day_one)) {
     day_one <- min(dataset$jday)
   }
   
