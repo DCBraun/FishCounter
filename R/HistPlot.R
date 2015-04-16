@@ -6,6 +6,7 @@
 #' @param day_one This is the first day of the dataset you want to use, defaults to the first day found in the dataset. This parameter needs to be specified in julian day format.
 #' @param site Name of the study river, defaults to the name in the site column.
 #' @param year Year of counter operation, defaults to the year found in the first row of the date column.
+#' @return Generates a histograms of peak signal size for either up counts, down counts and events for each counter channel.
 #' @keywords Histogram
 #' @export
 
