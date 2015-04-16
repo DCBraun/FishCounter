@@ -67,7 +67,7 @@ plot_events <- function(dataset, day_one=NULL, site=NULL, year=NULL) {
     
     box()
     
-    data.frame(no_events = xx$no_events, date_time = xx$date_time_alt)
+    data.frame(date_time = xx$date_time_alt, no_events = xx$no_events)
   }
   )
   
