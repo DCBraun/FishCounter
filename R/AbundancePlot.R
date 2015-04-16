@@ -29,8 +29,8 @@ plot_abundance <- function(dataset, day_one) {
               count = max(cummulative_count))
   dev.new()
   par(mfrow = c(2, 1), 
-      mar = c(0, 3, 0, 0), 
-      oma = c(6, 2, 0.5, 0.5))
+      mar = c(2, 6, 0, 0), 
+      oma = c(2, 2, 0.5, 0.5))
   
   plot(daily_count ~ date_time, data = up, 
        pch = 19, 
@@ -55,7 +55,7 @@ plot_abundance <- function(dataset, day_one) {
        lwd = 2, 
        pch = 19)
   
-  mtext("Total no. of fish", side=2, line = 3.5, cex = 1.5, las = 0)
+  mtext("Total no. of fish", side=2, line = 4.5, cex = 1.5, las = 0)
   mtext("Date", side=1, line=3, cex=1.5)
   
   r <- as.POSIXct(range(up$date_time))
