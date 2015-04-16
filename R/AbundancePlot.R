@@ -41,7 +41,7 @@ plot_abundance <- function(dataset, day_one) {
        ylab = "",
        type = "b")
   
-  mtext("Fish per day", side = 2, line = 2.5, outer = FALSE, cex = 1.5)  
+  mtext("Fish per day", side = 2, line = 5.5, outer = FALSE, cex = 1.5)  
   
   axis(2, las=1)
   box()
@@ -55,7 +55,7 @@ plot_abundance <- function(dataset, day_one) {
        lwd = 2, 
        pch = 19)
   
-  mtext("Total no. of fish", side=2, line = 4.5, cex = 1.5, las = 0)
+  mtext("Total no. of fish", side=2, line = 5.5, cex = 1.5, las = 0)
   mtext("Date", side=1, line=3, cex=1.5)
   
   r <- as.POSIXct(range(up$date_time))
