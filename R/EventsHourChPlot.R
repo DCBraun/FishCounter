@@ -47,7 +47,7 @@ plot_events <- function(dataset, day_one=NULL) {
   
   dev.new()
   par(mfrow = c(length(unique(events_hour1$channel)), 1), 
-      mar = c(4, 2, 0.5, 2), 
+      mar = c(4, 2, 0.5, 4), 
       oma = c(2, 4, 0.5, 2),
       las = 1,
       cex = 1.5)
@@ -55,29 +55,30 @@ plot_events <- function(dataset, day_one=NULL) {
   events_hour_ch <- plyr::ddply(hour_channel, c("channel"), function(x) {
     
   plot(x$no_events ~ as.POSIXct(x$date_time_alt), main = "", ylab = "", 
-      ylim = c(0, max(hour_channel[,c(3,4)]) * 1.05), 
+      ylim = c(0, max(hour_channel$no_events) * 1.05), 
       xlim = c(r[1], r[2]), 
       xlab = paste("Channel ", x$channel[1], sep = " "), 
       type = "l", 
       lwd = 2, 
       axes = FALSE)
   
+  lines(x = c(r[1], r[2]), 
+        y = c(mean(events_hour_channel$no_events), 
+              mean(events_hour_channel$no_events)), 
+        col = "red", 
+        lty = 2, 
+        lwd = 2)
+  
   par(new=TRUE)
   
   plot(x$no_ups ~ as.POSIXct(x$date_time_alt), main = "", ylab = "", 
-       ylim = c(0, max(hour_channel[,c(3,4)]) * 1.05), 
+       ylim = c(0, max(hour_channel$no_ups) * 1.05), 
        xlim = c(r[1], r[2]), 
-       xlab = paste("Channel ", xx$channel[1], sep = " "), 
+       xlab = "", 
        type = "l", 
-       lwd = 2, 
-       col = "blue",
+       lwd = 1.5, 
+       col = "0000FF70",
        axes = FALSE)
-    
-    lines(x = c(r[1], r[2]), 
-        y = c(mean(events_hour_channel$no_events), 
-        mean(events_hour_channel$no_events)), 
-        col = "red", 
-        lty = 2)
     
     axis(2, cex = 1.5)
     
@@ -85,25 +86,31 @@ plot_events <- function(dataset, day_one=NULL) {
     
     box()
   
-  if(xx$channel==1){
+  if(x$channel==1){
     legend("topleft", max(events_hour_channel$no_events), 
-           c("Mean events per hour", "Events per hour", "Ups per hour"), 
+           c("Mean events per hour", "Events per hour", "Up counts per hour"), 
            lwd = 3, 
-           col = c("red", "black", "blue"),
+           col = c("red", "black", "0000FF70"),
            lty = c(2, 1, 1), 
-           cex = 0.7)  
+           cex = 0.6)  
   }
     
-    data.frame(date_time = xx$date_time_alt, no_events = xx$no_events)
+    data.frame(date_time = x$date_time_alt, no_events = x$no_events)
   }
   )
   
-  mtext("No. Events per hour", 
+  mtext("Number of Events per hour", 
         side = 2, 
         line = 2, 
         outer = TRUE, 
         las = 0, 
         cex = 1.5)
   
+  mtext("Number Up Counts per hour", 
+        side = 2, 
+        line = 0, 
+        outer = TRUE, 
+        las = 0, 
+        cex = 1.5)
   print(events_hour_ch)
 }
