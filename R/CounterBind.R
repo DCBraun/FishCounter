@@ -54,49 +54,49 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
   
   date.alt <- strptime(counter_data2$date, '%d/%m/%y')
   counter_data2$jday <- date.alt$yday
-  counter.data3 <- subset(counter_data2, jday != "NA")#check to see if I need to convert to jday
+  counter_data3 <- subset(counter_data2, jday != "NA")#check to see if I need to convert to jday
   
-  counter.data4 <- data.frame("file"=counter.data3$file, 
-      "date.time"=as.character(as.POSIXlt(strptime(paste(counter.data3$date, 
-                                                   counter.data3$time, sep="-"), 
+  counter_data4 <- data.frame("file"=counter_data3$file, 
+      "date.time"=as.character(as.POSIXlt(strptime(paste(counter_data3$date, 
+                                                   counter_data3$time, sep="-"), 
                                                    format='%d/%m/%y-%H:%M:%S'))),
-      "date"=as.character(as.POSIXlt(strptime(counter.data3$date, 
+      "date"=as.character(as.POSIXlt(strptime(counter_data3$date, 
                                               format="%d/%m/%y"))),
-      "time"=as.character(counter.data3$time),
-      "X"=as.numeric(counter.data3$X),
-      "channel"=as.numeric(counter.data3$channel),
-      "description"=counter.data3$description,
-      "signal"=as.numeric(counter.data3$signal))
+      "time"=as.character(counter_data3$time),
+      "X"=as.numeric(counter_data3$X),
+      "channel"=as.numeric(counter_data3$channel),
+      "description"=counter_data3$description,
+      "signal"=as.numeric(counter_data3$signal))
   
-  counter.data5 <- counter.data4[counter.data4$channel <= (no_channels), ]
-  row_rm5 <- counter.data4[counter.data4$channel > (no_channels), ]
+  counter_data5 <- counter_data4[counter_data4$channel <= (no_channels), ]
+  row_rm5       <- counter_data4[counter_data4$channel > (no_channels), ]
   # removes any errors in channel number
   
-  counter.data6 <- counter.data5[!duplicated(counter.data5[, c(2, 6)]), ]
+  counter_data6 <- counter_data5[!duplicated(counter_data5[, c(2, 6)]), ]
   # removes any duplicate data
   
-  counter.data7 <- subset(counter.data6, signal <= max_signal)#filter_ 
-  #counter.data7 <- filter_(counter.data6, ~signal <= max_signal)#filter_ 
+  counter_data7 <- counter_data6[counter_data6$signal <= max_signal, ]
+  row_rm7       <- counter_data6[counter_data6$signal > max_signal, ]
   
   # gets rid of levels that have been subseted out. 
   
-  counter.data8 <- droplevels(counter.data7) 
+  counter_data8 <- droplevels(counter_data7) 
   # gets rid of levels that have been subseted out. 
   
-  counter.data9 <- counter.data8[order(counter.data8$date.time), ]
-  counter.data <- data.frame("site" = site, counter.data9)
+  counter_data9 <- counter_data8[order(counter_data8$date.time), ]
+  counter_data <- data.frame("site" = site, counter_data9)
   # Now write a new text file with only the graphics data. 
   # The row names, column names and quotes must be removed. 
   
-  write.csv(x=counter.data[, -3], 
+  write.csv(x=counter_data[, -3], 
             file=paste(path_to_folder,
                        site, 
                        year,
                        ".csv", 
                        sep=""), 
             row.names=FALSE)
-  #invisible(counter.data[,-2])
-  FuncOut <- list(row_rm1=row_rm1, row_rm5=row_rm5)
+  #invisible(counter_data[,-2])
+  FuncOut <- list(wrong_description=row_rm1, wrong_channel=row_rm5, wrong_pss=row_rm7)
   
   if(rows_rm=="TRUE"){
     return(FuncOut)  
