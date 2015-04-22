@@ -52,9 +52,9 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
   
   #This removes erronious data or unwanted counter status data
   
-  date.alt <- strptime(counter.data2$date, '%d/%m/%y')
+  date.alt <- strptime(counter_data2$date, '%d/%m/%y')
   counter.data2$jday <- date.alt$yday
-  counter.data3 <- subset(counter.data2, jday != "NA")#check to see if I need to convert to jday
+  counter.data3 <- subset(counter_data2, jday != "NA")#check to see if I need to convert to jday
   
   counter.data4 <- data.frame("file"=counter.data3$file, 
       "date.time"=as.character(as.POSIXlt(strptime(paste(counter.data3$date, 
