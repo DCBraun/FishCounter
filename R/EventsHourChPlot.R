@@ -57,7 +57,15 @@ plot_events <- function(dataset, day_one=NULL) {
     
     axis.POSIXct(1, at = seq(r[1], r[2], by = "day"), format = "%b %d", cex.axis = 0.9)
     
-    box()
+    box
+  if(xx$channel==1){
+    legend("topleft", max(events_hour_channel$no_events), 
+           c("Mean events per hour", "Events per hour"), 
+           lwd = 3, 
+           col = c("red", "black"),
+           lty = c(2, 1), 
+           cex=0.7)  
+  }
     
     data.frame(date_time = xx$date_time_alt, no_events = xx$no_events)
   }
@@ -78,13 +86,6 @@ plot_events <- function(dataset, day_one=NULL) {
         outer = TRUE, 
         las = 0, 
         cex = 1.5)
-  
-  legend("topleft", max(events_hour_channel$no_events), 
-         c("Mean events per hour", "Events per hour"), 
-         lwd = 3, 
-         col = c("red", "black"),
-         lty = c(2, 1), 
-         cex=0.7)  
   
   print(events_hour_ch)
 }
