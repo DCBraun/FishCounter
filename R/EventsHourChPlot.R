@@ -57,7 +57,7 @@ plot_events <- function(dataset, day_one=NULL) {
     
     axis.POSIXct(1, at = seq(r[1], r[2], by = "day"), format = "%b %d", cex.axis = 0.9)
     
-    box
+    box()
   if(xx$channel==1){
     legend("topleft", max(events_hour_channel$no_events), 
            c("Mean events per hour", "Events per hour"), 
