@@ -98,7 +98,7 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
   #invisible(counter.data[,-2])
   FuncOut <- list(row_rm1=row_rm, row_rm5=row_rm5)
   
-  if(rows_rm="TRUE"){
+  if(rows_rm=="TRUE"){
     return(FuncOut)  
   }
 }
