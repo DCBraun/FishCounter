@@ -30,6 +30,21 @@ plot_events <- function(dataset, day_one=NULL) {
   
   r <- range(events_hour_channel$date_time_alt)
   
+  
+  up_hour1               <- data.frame(dplyr::filter_(d1, ~description == "U"), no = 1)
+  up_hour1$date_time_alt <- as.character(as.POSIXct(strptime(paste(up_hour1$date, 
+                                                                       up_hour1$time,sep = " "), '%Y-%m-%d %H')))
+  up_hour1$date_alt      <- NULL
+  up_hour1$jday          <- NULL
+  
+  up_hour_channel <- plyr::ddply(up_hour1, c("date_time_alt", "channel"), 
+                                     summarize, no_ups = sum(no))
+  
+  up_hour_channel$date_time_alt <- as.POSIXct(strptime(up_hour_channel$date_time_alt, 
+                                                           format = "%Y-%m-%d %H"))
+  hour_channel <- merge(events_hour_channel, up_hour_channel, all  =TRUE)
+  hour_channel[is.na(hour_channel)] <- 0
+  
   dev.new()
   par(mfrow = c(length(unique(events_hour1$channel)), 1), 
       mar = c(4, 2, 0.5, 2), 
@@ -37,15 +52,26 @@ plot_events <- function(dataset, day_one=NULL) {
       las = 1,
       cex = 1.5)
   
-  events_hour_ch <- plyr::ddply(events_hour_channel, c("channel"), function(xx) {
+  events_hour_ch <- plyr::ddply(hour_channel, c("channel"), function(x) {
     
-  plot(xx$no_events ~ as.POSIXct(xx$date_time_alt), main = "", ylab = "", 
-      ylim = c(0, max(events_hour_channel$no_events) * 1.05), 
+  plot(x$no_events ~ as.POSIXct(x$date_time_alt), main = "", ylab = "", 
+      ylim = c(0, max(hour_channel[,c(3,4)]) * 1.05), 
       xlim = c(r[1], r[2]), 
-      xlab = paste("Channel ", xx$channel[1], sep = " "), 
+      xlab = paste("Channel ", x$channel[1], sep = " "), 
       type = "l", 
       lwd = 2, 
       axes = FALSE)
+  
+  par(new=TRUE)
+  
+  plot(x$no_ups ~ as.POSIXct(x$date_time_alt), main = "", ylab = "", 
+       ylim = c(0, max(hour_channel[,c(3,4)]) * 1.05), 
+       xlim = c(r[1], r[2]), 
+       xlab = paste("Channel ", xx$channel[1], sep = " "), 
+       type = "l", 
+       lwd = 2, 
+       col = "blue",
+       axes = FALSE)
     
     lines(x = c(r[1], r[2]), 
         y = c(mean(events_hour_channel$no_events), 
@@ -58,27 +84,19 @@ plot_events <- function(dataset, day_one=NULL) {
     axis.POSIXct(1, at = seq(r[1], r[2], by = "day"), format = "%b %d", cex.axis = 0.9)
     
     box()
+  
   if(xx$channel==1){
     legend("topleft", max(events_hour_channel$no_events), 
-           c("Mean events per hour", "Events per hour"), 
+           c("Mean events per hour", "Events per hour", "Ups per hour"), 
            lwd = 3, 
-           col = c("red", "black"),
-           lty = c(2, 1), 
-           cex=0.7)  
+           col = c("red", "black", "blue"),
+           lty = c(2, 1, 1), 
+           cex = 0.7)  
   }
     
     data.frame(date_time = xx$date_time_alt, no_events = xx$no_events)
   }
   )
-  
-  mtext("mean events per hour for all channels", 
-        side = 2, 
-        outer = TRUE, 
-        col = "red", 
-        line = -24, 
-        at = 1, 
-        las = 1,
-        cex = 1.5)
   
   mtext("No. Events per hour", 
         side = 2, 
