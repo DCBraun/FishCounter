@@ -21,10 +21,10 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
     year <- ""
   }
   
-  counter.paths <- dir(path_to_folder, full.names = TRUE)
-  names(counter.paths) <- basename(counter.paths)
+  counter_paths <- dir(path_to_folder, full.names = TRUE)
+  names(counter_paths) <- basename(counter_paths)
   
-  counter.data1 <- plyr::ldply(counter.paths, 
+  counter_data1 <- plyr::ldply(counter_paths, 
                        read.table, 
                        header=FALSE, 
                        sep="", 
@@ -34,7 +34,7 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
   #stringsAsFactors=FALSE is important because conversion 
   #of numeric factors to numeric can be problematic.
   
-  colnames(counter.data1) <- c("file", 
+  colnames(counter_data1) <- c("file", 
                              "date", 
                              "time", 
                              "X", 
@@ -42,8 +42,14 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
                              "description", 
                              "signal")
   
-  counter.data2 <- subset(counter.data1, 
-                        description=="U" | description=="D" | description=="E")
+  counter_data2 <- counter_data1[counter_data1$description == "U" | 
+                    counter_data1$description == "D" | 
+                    counter_data1$description == "E", ]
+  
+  row_rm        <- counter_data1[counter_data1$description != "U" & 
+                    counter_data1$description != "D" & 
+                    counter_data1$description != "E", ]
+  
   #This removes erronious data or unwanted counter status data
   
   date.alt <- strptime(counter.data2$date, '%d/%m/%y')
@@ -89,4 +95,6 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
                        sep=""), 
             row.names=FALSE)
   #invisible(counter.data[,-2])
+  FuncOut <- list(row_rm1=row_rm)
+  return(FuncOut)
 }
