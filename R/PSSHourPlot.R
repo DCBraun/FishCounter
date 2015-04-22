@@ -8,7 +8,7 @@
 #' @keywords Events
 #' @export
 
-plot_pss_hour<-function(dataset, day_one=NULL, channel=NULL, low_thresh=NULL, up_thresh=NULL) {
+plot_pss_hour<-function(dataset, day_one=NULL, channel=NULL, low_thresh=NULL, up_thresh=NULL, ch=NULL) {
   
   if(is.null(low_thresh)) {
     low_thresh <- 0
@@ -22,11 +22,11 @@ plot_pss_hour<-function(dataset, day_one=NULL, channel=NULL, low_thresh=NULL, up
     day_one <- min(dataset$jday)
   }
   
-  if(is.null(channel)) {
+  if(is.null(ch)) {
     dataset <- dataset
   }
-  if(channel > 0) {
-  dataset          <- dplyr::filter_(dataset, ~channel == channel)
+  if(ch > 0) {
+  dataset          <- dplyr::filter_(dataset, ~channel == ch)
   }
   dataset          <- dplyr::filter_(dataset, ~jday >= day_one)
   dataset$jday     <- NULL
