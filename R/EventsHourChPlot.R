@@ -80,11 +80,11 @@ plot_events <- function(dataset, day_one=NULL) {
         cex = 1.5)
   
   legend("topleft", max(events_hour_channel$no_events), 
-         c("Mean events per hour"), 
+         c("Mean events per hour", "Events per hour"), 
          lwd = 3, 
-         col = "red",
-         lty = 2, 
-         cex=0.8)  
+         col = c("red", "black"),
+         lty = c(2, 1), 
+         cex=0.7)  
   
   print(events_hour_ch)
 }
