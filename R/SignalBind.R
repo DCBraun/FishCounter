@@ -8,7 +8,7 @@
 #' @keywords Logie
 #' @export
 
-bind_signal_data<-function(path_to_folder, site, year, max_signal){
+bind_signal_data<-function(path_to_folder, site, year, max_signal, rows_rm=NULL){
   library(plyr)
   library(dplyr)
   
@@ -24,18 +24,18 @@ bind_signal_data<-function(path_to_folder, site, year, max_signal){
     year <- ""
   }
   
-  signal.data1 <- ldply(signal.paths, 
+  signal_data1 <- ldply(signal.paths, 
                       read.table, 
                       header=FALSE, 
                       sep="", 
                       fill=TRUE, 
                       stringsAsFactors=FALSE)
   
-  signal.data2 <- subset(signal.data1[, c(1:8)], V1=="S")[, -2]
+  signal_data2 <- subset(signal_data1[, c(1:8)], V1=="S")[, -2]
   
-  signal.data3 <- droplevels(signal.data2)
+  signal_data3 <- droplevels(signal_data2)
   
-  colnames(signal.data3) <- c("file", 
+  colnames(signal_data3) <- c("file", 
                             "date", 
                             "time", 
                             "X", 
@@ -43,27 +43,33 @@ bind_signal_data<-function(path_to_folder, site, year, max_signal){
                             "description", 
                             "signal")
   
-  signal.data4 <- data.frame("file"=signal.data3$file,
-                           "date.time"=as.POSIXlt(strptime(paste(signal.data3$date, signal.data3$time, sep="-"), format='%d/%m/%y-%H:%M:%S')),
-                           "date"=as.character(as.POSIXlt(strptime(signal.data3$date, format="%d/%m/%y"))),
-                           "time"=as.character(signal.data3$time),
-                           "X"=as.numeric(signal.data3$X),
-                           "channel"=as.numeric(signal.data3$channel),
-                           "description"=signal.data3$description,
-                           "signal"=as.numeric(signal.data3$signal))
+  signal_data4 <- data.frame("file"=signal_data3$file,
+                           "date.time"=as.POSIXlt(strptime(paste(signal_data3$date, signal_data3$time, sep="-"), format='%d/%m/%y-%H:%M:%S')),
+                           "date"=as.character(as.POSIXlt(strptime(signal_data3$date, format="%d/%m/%y"))),
+                           "time"=as.character(signal_data3$time),
+                           "X"=as.numeric(signal_data3$X),
+                           "channel"=as.numeric(signal_data3$channel),
+                           "description"=signal_data3$description,
+                           "signal"=as.numeric(signal_data3$signal))
   
-  signal.data5 <- signal.data4[!duplicated(signal.data4[, c(2, 6)]), ]
+  signal_data5 <- signal_data4[!duplicated(signal_data4[, c(2, 6)]), ]
   
-  signal.data <- subset(signal.data5, signal <= max_signal)
+  signal_data <- signal_data5[signal_data5signal <= max_signal, ]
+  row_rm5     <- signal_data5[signal_data5signal > max_signal, ]
   
-  signal.data <- signal.data[order(signal.data$time), ]
+  signal_data <- signal_data[order(signal_data$time), ]
   
   #try changing the encoding when exporting. Look at what the encoding is when using a PC. Load the graphics file onto Jan's computer.
-  write.csv(x=signal.data[, -2], 
+  write.csv(x=signal_data[, -2], 
             file=paste(path_to_folder, 
                        site, 
                        year,
                        ".csv", 
                        sep=""),
                        row.names=FALSE)
+  FuncOut <- list(wrong_pss=row_rm5)
+  
+  if(rows_rm=="TRUE"){
+    return(FuncOut)  
+  }
 }
