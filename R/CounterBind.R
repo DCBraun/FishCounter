@@ -10,7 +10,7 @@
 #' @export
 
 
-bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_signal, rows_rm=NULL) {
+bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_signal, rows_rm) {
   #path_to_folder use current wd() if not specified. Make sure it works.  
   #add in metadata to the output file. e.g., number of channels, site name, etc.
   
@@ -98,7 +98,11 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
   #invisible(counter_data[,-2])
   FuncOut <- list(wrong_description=row_rm1, wrong_channel=row_rm5, wrong_pss=row_rm7)
   
-  if(rows_rm=="TRUE"){
+  if(rows_rm == "TRUE"){
     return(FuncOut)  
   }
+  if(rows_rm == "FALSE"){
+      
+  }
+  
 }
