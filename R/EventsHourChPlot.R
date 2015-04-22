@@ -77,21 +77,20 @@ plot_events <- function(dataset, day_one=NULL) {
        xlab = "", 
        type = "l", 
        lwd = 1.5, 
-       col = "0000FF70",
+       col = "#0000FF70",
        axes = FALSE)
     
     axis(2, cex = 1.5)
     axis(4, cex = 1.5)
-    
     axis.POSIXct(1, at = seq(r[1], r[2], by = "day"), format = "%b %d", cex.axis = 0.9)
     
     box()
   
-  if(x$channel==1){
+  if(x$channel[1] == 1){
     legend("topleft", max(events_hour_channel$no_events), 
            c("Mean events per hour", "Events per hour", "Up counts per hour"), 
            lwd = 3, 
-           col = c("red", "black", "0000FF70"),
+           col = c("red", "black", "#0000FF70"),
            lty = c(2, 1, 1), 
            cex = 0.6)  
   }
@@ -108,7 +107,7 @@ plot_events <- function(dataset, day_one=NULL) {
         cex = 1.5)
   
   mtext("Number Up Counts per hour", 
-        side = 2, 
+        side = 4, 
         line = 0, 
         outer = TRUE, 
         las = 0, 
