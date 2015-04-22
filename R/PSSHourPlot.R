@@ -23,9 +23,9 @@ plot_pss_hour<-function(dataset, day_one=NULL, channel=NULL, low_thresh=NULL, up
   }
   
   if(is.null(channel)) {
-
+    dataset <- dataset
   }
-  if(channel>0) {
+  if(channel > 0) {
   dataset          <- dplyr::filter_(dataset, ~channel == channel)
   }
   dataset          <- dplyr::filter_(dataset, ~jday >= day_one)
