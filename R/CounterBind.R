@@ -14,10 +14,10 @@ bind_counter_data <- function(path_to_folder=".", no_channels, site, year, max_s
   #path_to_folder use current wd() if not specified. Make sure it works.  
   #add in metadata to the output file. e.g., number of channels, site name, etc.
   
-  if(missing(site)) {
+  if(is.null(site)) {
     site <- ""
   }
-  if(missing(year)) {
+  if(is.null(year)) {
     year <- ""
   }
   
