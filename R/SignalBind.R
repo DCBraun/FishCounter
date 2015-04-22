@@ -9,13 +9,11 @@
 #' @export
 
 bind_signal_data<-function(path_to_folder, site, year, max_signal, rows_rm=NULL){
-  library(plyr)
-  library(dplyr)
   
   #"\\.txt$" tells r that the files are text files.  
-  signal.paths <- dir(path_to_folder, pattern = "\\.txt$", full.names = TRUE)
+  signal_paths <- dir(path_to_folder, pattern = "\\.txt$", full.names = TRUE)
   
-  names(signal.paths) <- basename(signal.paths)
+  names(signal_paths) <- basename(signal_paths)
   
   if(missing(site)) {
     site <- ""
@@ -24,7 +22,7 @@ bind_signal_data<-function(path_to_folder, site, year, max_signal, rows_rm=NULL)
     year <- ""
   }
   
-  signal_data1 <- ldply(signal.paths, 
+  signal_data1 <- ldply(signal_paths, 
                       read.table, 
                       header=FALSE, 
                       sep="", 
