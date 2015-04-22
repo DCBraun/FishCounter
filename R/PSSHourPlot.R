@@ -8,7 +8,7 @@
 #' @keywords Events
 #' @export
 
-plot_pss_hour<-function(dataset, day_one=NULL, low_thresh=NULL, up_thresh=NULL) {
+plot_pss_hour<-function(dataset, day_one=NULL, channel=NULL, low_thresh=NULL, up_thresh=NULL) {
   
   if(is.null(low_thresh)) {
     low_thresh <- 0
@@ -22,19 +22,47 @@ plot_pss_hour<-function(dataset, day_one=NULL, low_thresh=NULL, up_thresh=NULL) 
     day_one <- min(dataset$jday)
   }
   
+  if(is.null(channel)) {
+
+  }
+  if(channel>0) {
+  dataset          <- dplyr::filter_(dataset, ~channel == channel)
+  }
   dataset          <- dplyr::filter_(dataset, ~jday >= day_one)
   dataset$jday     <- NULL
   dataset$date_alt <- NULL
   dataset$hour     <- strptime(dataset$time, format = "%H:%M:%S")
   dataset$hour     <- as.POSIXct(round(dataset$hour, "mins"))
   
-  dev.new()
-  par(mfrow = c(1, 1), 
-      mar = c(2, 2, 2, 2), 
-      oma = c(2, 2, 2, 2),
-      cex = 1.5)
+  up_dataset  		    <- dplyr::filter_(dataset, ~description == "U")
+  up_dataset$count    <- 1
+  up_dataset$hour_24  <- substring(up_dataset$hour, first=12, last=13)
+  up_hour_count       <- ddply(up_dataset, c("hour_24"), summarize, up_hour = sum(count))  
   
-  plot(signal ~ hour, data = dplyr::filter_(dataset, ~description == "U"),
+  dev.new()
+  
+  m <- matrix(c(  0,0,0,0,
+                  0,1,2,0,
+                  0,1,2,0,
+                  0,0,0,0), 4, 4) 
+  
+  layout(m, widths=c(0.75,2,2,0.25), heights=c(0.05,0.75,2,0.4))
+  par(mar=c(0,0,0,0), oma=c(0,0,0,0), cex=1.25)
+  
+  plot(up_hour ~ hour_24, data = up_hour_count,
+       col = "#00000070", pch = 19, cex = 1.5, axes = FALSE, las = 1, 
+       xlab = "", ylab = "", type = "b")
+  
+  axis(2, las = 1, col = "grey60")
+  box(col = "grey60")
+  
+  mtext("Number of Up Counts", 
+        side = 2, 
+        line = 4, 
+        outer = FALSE, 
+        cex = 1.5)
+  
+  plot(signal ~ hour, data = dataset,
        col = "#00000010", pch = 19, cex = 1.5, axes = FALSE, las = 1, 
        xlab = "", ylab = "", ylim = c(low_thresh, up_thresh))
   
@@ -46,7 +74,7 @@ plot_pss_hour<-function(dataset, day_one=NULL, low_thresh=NULL, up_thresh=NULL) 
   
   mtext("Peak signal", 
         side = 2, 
-        line = 2.5, 
+        line = 4, 
         outer = FALSE, 
         cex = 1.5)
   
