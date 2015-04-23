@@ -31,7 +31,7 @@ plot_pss_hour<-function(dataset,
     ch <- seq(min(dataset1$channel, na.rm=TRUE), max(dataset1$channel, na.rm=TRUE), 1)
   }
   
-  dataset2          <- dataset1[dataset1$channel %in% ch, ]
+  dataset2          <- subset(dataset1, channel %in% ch)
   dataset3          <- dplyr::filter_(dataset2, ~jday >= day_one)
   dataset3$jday     <- NULL
   dataset3$date_alt <- NULL
@@ -41,7 +41,7 @@ plot_pss_hour<-function(dataset,
   up_dataset1  		    <- dplyr::filter_(dataset3, ~description == "U")
   up_dataset1$count    <- 1
   up_dataset1$hour_24  <- substring(up_dataset1$hour, first=12, last=13)
-  up_hour_count       <- ddply(up_dataset1, c("hour_24"), summarize, up_hour = sum(count))  
+  up_hour_count       <- plyr::ddply(up_dataset1, c("hour_24"), summarize, up_hour = sum(count))  
   
   dev.new()
   
