@@ -16,14 +16,14 @@ plot_pss_hour<-function(dataset, day_one=NULL, channel=NULL, low_thresh=NULL, up
   if(is.null(up_thresh)) {
     up_thresh <- 130
   }
-  
+  datasets     <- dataset[dataset !=NA, ]
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
     day_one <- min(dataset$jday)
   }
   
   if(is.null(ch)) {
-    ch <- seq(min(dataset$channel), max(dataset$channel), 1)
+    ch <- seq(min(dataset$channel, na.rm=TRUE), max(dataset$channel, na.rm=TRUE), 1)
     }
   dataset          <- dataset[dataset$channel %in% ch, ]
   dataset          <- dplyr::filter_(dataset, ~jday >= day_one)
