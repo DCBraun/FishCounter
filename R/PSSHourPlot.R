@@ -21,6 +21,7 @@ plot_pss_hour<-function(dataset,
   if(is.null(up_thresh)) {
     up_thresh <- 130
   }
+  
   dataset1     <- na.omit(dataset)
   dataset1$jday <- strptime(dataset1$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
@@ -28,7 +29,7 @@ plot_pss_hour<-function(dataset,
   }
   
   if(is.null(ch)) {
-    ch <- seq(min(dataset1$channel, na.rm=TRUE), max(dataset1$channel, na.rm=TRUE), 1)
+    ch <- seq(min(dataset1$channel, na.rm = TRUE), max(dataset1$channel, na.rm = TRUE), 1)
   }
   
   dataset2          <- subset(dataset1, channel %in% ch)
@@ -38,13 +39,12 @@ plot_pss_hour<-function(dataset,
   dataset3$hour     <- strptime(dataset3$time, format = "%H:%M:%S")
   dataset3$hour     <- as.POSIXct(round(dataset3$hour, "mins"))
   
-  up_dataset1  		    <- dplyr::filter_(dataset3, ~description == "U")
+  up_dataset1  		     <- dplyr::filter_(dataset3, ~description == "U")
   up_dataset1$count    <- 1
   up_dataset1$hour_24  <- substring(up_dataset1$hour, first=12, last=13)
-  up_hour_count       <- plyr::ddply(up_dataset1, c("hour_24"), summarize, up_hour = sum(count))  
+  up_hour_count        <- plyr::ddply(up_dataset1, c("hour_24"), summarize, up_hour = sum(count))  
   
   dev.new()
-  
   m <- matrix(c(  0,0,0,0,
                   0,1,2,0,
                   0,1,2,0,
