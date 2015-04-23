@@ -4,16 +4,12 @@
 \alias{hist_all_records}
 \title{A function that plots histograms of Logie counter data}
 \usage{
-hist_all_records(dataset, day_one = NULL, site = NULL, year = NULL)
+hist_all_records(dataset, day_one = NULL)
 }
 \arguments{
 \item{dataset}{This is the dataset used to create the histograms.}
 
 \item{day_one}{This is the first day of the dataset you want to use, defaults to the first day found in the dataset. This parameter needs to be specified in julian day format.}
-
-\item{site}{Name of the study river, defaults to the name in the site column.}
-
-\item{year}{Year of counter operation, defaults to the year found in the first row of the date column.}
 }
 \value{
 Generates histograms of peak signal size for up counts, down counts and events for each counter channel.

@@ -4,14 +4,10 @@
 \alias{plot_events}
 \title{A function that plots events per hour of Logie counter data}
 \usage{
-plot_events(dataset, day_one, site, year)
+plot_events(dataset, day_one = NULL)
 }
 \arguments{
 \item{day_one}{This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.}
-
-\item{site}{Name of the study river.}
-
-\item{year}{Year of counter operation.}
 
 \item{data}{This is the dataset used to create the plots.}
 }

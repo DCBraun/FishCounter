@@ -6,16 +6,12 @@
 A function to bind and process Logie signal data
 This function allows you to bind together mulitple signal data files, remove errors and produce a master datafile.}
 \usage{
-plot_abundance(dataset, day_one, site, year)
+plot_abundance(dataset, day_one)
 }
 \arguments{
 \item{dataset}{This is the object containing the data for plotting.}
 
 \item{day_one}{This is the first day the data should start on.}
-
-\item{site}{Name of the study river.}
-
-\item{year}{Year of counter operation.}
 }
 \description{
 plot_abundance
