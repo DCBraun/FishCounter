@@ -24,22 +24,22 @@ plot_pss_hour<-function(dataset,
   dataset1     <- na.omit(dataset)
   dataset1$jday <- strptime(dataset1$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
-    day_one <- min(dataset11$jday)
+    day_one <- min(dataset1$jday)
   }
   
   if(is.null(ch)) {
     ch <- seq(min(dataset1$channel, na.rm=TRUE), max(dataset1$channel, na.rm=TRUE), 1)
-    }
-
-  dataset1          <- dataset1[dataset1$channel %in% ch, ]
-  dataset1          <- dplyr::filter_(dataset1, ~jday >= day_one)
-  dataset1$jday     <- NULL
-  dataset1$date_alt <- NULL
-  dataset1$hour     <- strptime(dataset1$time, format = "%H:%M:%S")
-  dataset1$hour     <- as.POSIXct(round(dataset1$hour, "mins"))
+  }
   
-  up_dataset1  		    <- dplyr::filter_(dataset1, ~description == "U")
-  up_dataset1$count    <- 1
+  dataset2          <- dataset1[dataset1$channel %in% ch, ]
+  dataset3          <- dplyr::filter_(dataset2, ~jday >= day_one)
+  dataset3$jday     <- NULL
+  dataset3$date_alt <- NULL
+  dataset3$hour     <- strptime(dataset3$time, format = "%H:%M:%S")
+  dataset3$hour     <- as.POSIXct(round(dataset3$hour, "mins"))
+  
+  up_dataset4  		    <- dplyr::filter_(dataset3, ~description == "U")
+  up_dataset4$count    <- 1
   up_dataset1$hour_24  <- substring(up_dataset1$hour, first=12, last=13)
   up_hour_count       <- ddply(up_dataset1, c("hour_24"), summarize, up_hour = sum(count))  
   
@@ -66,11 +66,11 @@ plot_pss_hour<-function(dataset,
         outer = FALSE, 
         cex = 1.5)
   
-  plot(signal ~ hour, data = dataset1,
+  plot(signal ~ hour, data = dataset3,
        col = "#00000010", pch = 19, cex = 1.5, axes = FALSE, las = 1, 
        xlab = "", ylab = "", ylim = c(low_thresh, up_thresh))
   
-  axis.POSIXct(1, dataset1$hour, format = "%H:%M", cex.axis = 1, col = "grey60")
+  axis.POSIXct(1, dataset3$hour, format = "%H:%M", cex.axis = 1, col = "grey60")
   
   axis(2, las = 1, col = "grey60")
   
