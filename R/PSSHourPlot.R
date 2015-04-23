@@ -38,8 +38,8 @@ plot_pss_hour<-function(dataset,
   dataset3$hour     <- strptime(dataset3$time, format = "%H:%M:%S")
   dataset3$hour     <- as.POSIXct(round(dataset3$hour, "mins"))
   
-  up_dataset4  		    <- dplyr::filter_(dataset3, ~description == "U")
-  up_dataset4$count    <- 1
+  up_dataset1  		    <- dplyr::filter_(dataset3, ~description == "U")
+  up_dataset1$count    <- 1
   up_dataset1$hour_24  <- substring(up_dataset1$hour, first=12, last=13)
   up_hour_count       <- ddply(up_dataset1, c("hour_24"), summarize, up_hour = sum(count))  
   
