@@ -8,7 +8,7 @@
 #' @keywords Events
 #' @export
 
-plot_pss_hour<-function(dataset, day_one = NULL, channel = NULL, low_thresh = NULL, up_thresh = NULL, ch = NULL) {
+plot_pss_hour<-function(dataset, day_one = NULL, low_thresh = NULL, up_thresh = NULL, ch = NULL) {
   
   if(is.null(low_thresh)) {
     low_thresh <- 0
