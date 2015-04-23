@@ -21,7 +21,7 @@ plot_pss_hour<-function(dataset,
   if(is.null(up_thresh)) {
     up_thresh <- 130
   }
-  dataset1     <- dataset[dataset !=NA, ]
+  dataset1     <- na.omit(dataset)
   dataset1$jday <- strptime(dataset1$date, '%Y-%m-%d')$yday
   if(is.null(day_one)) {
     day_one <- min(dataset11$jday)
