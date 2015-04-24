@@ -2,13 +2,17 @@
 #'
 #' This function plots the PSS by day and time for Logie counter data
 #' @param dataset This is the dataset used to create the plots.
-#' @param day_one This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
+#' @param first_day This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
 #' @param low_thresh is the counters lower threshold PSS value.
 #' @param up_thresh is the counters upper threshold PSS value.
 #' @keywords Events
 #' @export
 
-plot_pss_date <- function(dataset, day_one=NULL, low_thresh=NULL, up_thresh=NULL) {
+plot_pss_date <- function(dataset, 
+                          first_day = NULL, 
+                          last_day = NULL, 
+                          low_thresh = NULL, 
+                          up_thresh = NULL) {
   
   if(is.null(low_thresh)) {
     low_thresh <- 0
@@ -17,11 +21,14 @@ plot_pss_date <- function(dataset, day_one=NULL, low_thresh=NULL, up_thresh=NULL
     up_thresh <- 130
   }
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
-  if(is.null(day_one)) {
-    day_one <- min(dataset$jday)
+  if(is.null(first_day)) {
+    first_day <- min(dataset$jday, na.rm = TRUE)
+  }
+  if(is.null(last_day)) {
+    last_day <- max(dataset$jday, na.rm = TRUE)
   }
   
-  dataset           <- dplyr::filter_(dataset, ~jday >= day_one)
+  dataset           <- dplyr::filter_(dataset, ~jday >= first_day, ~jday <= last_day)
   dataset$jday      <- NULL
   dataset$date_alt  <- NULL
   dataset$date_time <- strptime(paste(dataset$date, dataset$time, sep = " "), 
