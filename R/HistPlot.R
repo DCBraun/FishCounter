@@ -30,7 +30,7 @@ hist_records <- function(dataset, direction, first_day = NULL, last_day = NULL) 
     first_day <- min(dataset$jday)
   }
   if(is.null(last_day)) {
-    last_day <- min(dataset$jday)
+    last_day <- max(dataset$jday)
   }
   
   d1 <- dplyr::filter_(dataset, ~jday >= first_day, ~jday <= last_day)
