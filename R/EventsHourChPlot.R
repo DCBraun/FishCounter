@@ -7,14 +7,17 @@
 #' @keywords Events
 #' @export
 
-plot_events <- function(dataset, day_one=NULL) {
+plot_events <- function(dataset, first_day = NULL, last_day = NULL) {
 
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
-  if(is.null(day_one)) {
-    day_one <- min(dataset$jday)
+  if(is.null(first_day)) {
+    first_day <- min(dataset$jday, na.rm = TRUE)
+  }
+  if(is.null(last_day)) {
+    last_day <- max(dataset$jday, na.rm = TRUE)
   }
   
-  d1 <- dplyr::filter_(dataset, ~jday >= day_one)
+  d1 <- dplyr::filter_(dataset, ~jday >= first_day, ~jday <= last_day)
   
   events_hour1               <- data.frame(dplyr::filter_(d1, ~description == "E"), no = 1)
   events_hour1$date_time_alt <- as.character(as.POSIXct(strptime(paste(events_hour1$date, 
