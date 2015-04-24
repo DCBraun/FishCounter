@@ -33,7 +33,7 @@ hist_records <- function(dataset, direction, first_day = NULL, last_day = NULL) 
     last_day <- min(dataset$jday)
   }
   
-  d1 <- dplyr::filter_(dataset, ~jday >= first_day, ~jday >= last_day)
+  d1 <- dplyr::filter_(dataset, ~jday >= first_day, ~jday <= last_day)
   d <- dplyr::select(d1, channel, description, signal)
   
   #plot.new()
