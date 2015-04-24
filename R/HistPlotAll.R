@@ -2,19 +2,24 @@
 #'
 #' This function plots historgrams of up, down and event counts for Logie counter data by channel
 #' @param dataset This is the dataset used to create the histograms.
-#' @param day_one This is the first day of the dataset you want to use, defaults to the first day found in the dataset. This parameter needs to be specified in julian day format.
+#' @param first_day This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the first day in the dataset
+#' @param last_day This is the last day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the last day in the dataset.
 #' @return Generates histograms of peak signal size for up counts, down counts and events for each counter channel.
 #' @keywords Histogram
 #' @export
 
-hist_all_records <- function(dataset, day_one=NULL) {
+hist_all_records <- function(dataset, 
+                             first_day = NULL, 
+                             last_day = NULL) {
   
   dataset$jday <- strptime(dataset$date, '%Y-%m-%d')$yday
-  if(is.null(day_one)) {
-    day_one <- min(dataset$jday)
+  if(is.null(first_day)) {
+    first_day <- min(dataset$jday, na.rm=TRUE)
   }
-  
-  d1 <- dplyr::filter_(dataset, ~jday >= day_one)
+  if(is.null(last_day)) {
+    last_day <- max(dataset$jday, na.rm=TRUE)
+  }
+  d1 <- dplyr::filter_(dataset, ~jday >= first_day, ~jday <= last_day)
   d <- dplyr::select(d1, channel, description, signal)
   ################
   par_ops <- list(mfrow = c(length(unique(d$channel)), 1), 
