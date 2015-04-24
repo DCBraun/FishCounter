@@ -4,10 +4,12 @@
 \alias{plot_events}
 \title{A function that plots events per hour of Logie counter data}
 \usage{
-plot_events(dataset, day_one = NULL)
+plot_events(dataset, first_day = NULL, last_day = NULL)
 }
 \arguments{
-\item{day_one}{This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.}
+\item{first_day}{This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the first day in the dataset}
+
+\item{last_day}{This is the last day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the last day in the dataset.}
 
 \item{data}{This is the dataset used to create the plots.}
 }

@@ -2,7 +2,8 @@
 #'
 #' This function plots the number of events per hour channel and day for Logie counter data by channel
 #' @param data This is the dataset used to create the plots.
-#' @param day_one This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
+#' @param first_day This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the first day in the dataset
+#' @param last_day This is the last day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the last day in the dataset.
 #' @return Generates three .pdf files with histograms of peak signal size for up counts, down counts and events for each counter channel.
 #' @keywords Events
 #' @export

@@ -3,7 +3,8 @@
 #' This function plots historgrams of up, down and event counts for Logie counter data by channel as specified by the user.
 #' @param dataset This is the dataset used to create the histograms.
 #' @param direction This is the type of record ("U", "D", or "E") to be plotted.
-#' @param first_day This is the first day of the dataset you want to use, defaults to the first day found in the dataset. This parameter needs to be specified in julian day format.
+#' @param first_day This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the first day in the dataset
+#' @param last_day This is the last day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the last day in the dataset.
 #' @return Generates a histograms of peak signal size for either up counts, down counts and events for each counter channel.
 #' @keywords Histogram
 #' @export

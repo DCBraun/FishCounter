@@ -2,9 +2,11 @@
 #'
 #' This function plots the PSS by hour for Logie counter data
 #' @param dataset This is the dataset used to create the plots.
-#' @param first_day This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
-#' @param low_thresh is the counters lower threshold PSS value.
-#' @param up_thresh is the counters upper threshold PSS value.
+#' @param first_day This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the first day in the dataset
+#' @param last_day This is the last day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the last day in the dataset.
+#' @param low_thresh is the counters lower threshold PSS value. Defaults to 0.
+#' @param up_thresh is the counters upper threshold PSS value. Defaults to 130.
+#' @param ch is the channel to be plotted. Defaults to all channels.
 #' @keywords Events
 #' @export
 

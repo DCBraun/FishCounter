@@ -4,17 +4,21 @@
 \alias{plot_pss_date}
 \title{A function that plots the peak signal size (PSS) by date and time per hour of Logie counter data}
 \usage{
-plot_pss_date(dataset, day_one = NULL, low_thresh = NULL,
-  up_thresh = NULL)
+plot_pss_date(dataset, first_day = NULL, last_day = NULL,
+  low_thresh = NULL, up_thresh = NULL, ch = NULL)
 }
 \arguments{
 \item{dataset}{This is the dataset used to create the plots.}
 
-\item{day_one}{This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.}
+\item{first_day}{This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the first day in the dataset}
 
-\item{low_thresh}{is the counters lower threshold PSS value.}
+\item{last_day}{This is the last day of the dataset you want to use. This parameter needs to be specified in julian day format. Defaults to the last day in the dataset.}
 
-\item{up_thresh}{is the counters upper threshold PSS value.}
+\item{low_thresh}{is the counters lower threshold PSS value. Defaults to 0.}
+
+\item{up_thresh}{is the counters upper threshold PSS value. Defaults to 130.}
+
+\item{ch}{is the channel to be plotted. Defaults to all channels.}
 }
 \description{
 This function plots the PSS by day and time for Logie counter data
