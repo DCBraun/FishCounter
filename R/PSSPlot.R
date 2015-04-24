@@ -31,6 +31,7 @@ plot_pss_date <- function(dataset,
   if(is.null(ch)) {
     ch <- seq(min(dataset$channel, na.rm = TRUE), max(dataset$channel, na.rm = TRUE), 1)
   }
+  dataset           <- subset(dataset, channel %in% ch)
   dataset           <- dplyr::filter_(dataset, ~jday >= first_day, ~jday <= last_day)
   dataset$jday      <- NULL
   dataset$date_alt  <- NULL
