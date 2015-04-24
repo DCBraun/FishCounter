@@ -2,13 +2,18 @@
 #'
 #' This function plots the PSS by hour for Logie counter data
 #' @param dataset This is the dataset used to create the plots.
-#' @param day_one This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
+#' @param first_day This is the first day of the dataset you want to use. This parameter needs to be specified in julian day format.
 #' @param low_thresh is the counters lower threshold PSS value.
 #' @param up_thresh is the counters upper threshold PSS value.
 #' @keywords Events
 #' @export
 
-plot_pss_hour<-function(dataset, day_one = NULL, low_thresh = NULL, up_thresh = NULL, ch = NULL) {
+plot_pss_hour <- function(dataset, 
+                          first_day = NULL, 
+                          last_day  = NULL, 
+                          low_thresh = NULL, 
+                          up_thresh = NULL, 
+                          ch = NULL) {
   
   if(is.null(low_thresh)) {
     low_thresh <- 0
@@ -19,8 +24,11 @@ plot_pss_hour<-function(dataset, day_one = NULL, low_thresh = NULL, up_thresh = 
   
   dataset1     <- na.omit(dataset)
   dataset1$jday <- strptime(dataset1$date, '%Y-%m-%d')$yday
-  if(is.null(day_one)) {
-    day_one <- min(dataset1$jday)
+  if(is.null(first_day)) {
+    first_day <- min(dataset1$jday, na.rm = TRUE)
+  }
+  if(is.null(last_day)) {
+    last_day <- max(dataset1$jday, na.rm = TRUE)
   }
   
   if(is.null(ch)) {
@@ -28,7 +36,7 @@ plot_pss_hour<-function(dataset, day_one = NULL, low_thresh = NULL, up_thresh = 
   }
   
   dataset2          <- subset(dataset1, channel %in% ch)
-  dataset3          <- dplyr::filter_(dataset2, ~jday >= day_one)
+  dataset3          <- dplyr::filter_(dataset2, ~jday >= first_day, ~jday <= last_day)
   dataset3$jday     <- NULL
   dataset3$date_alt <- NULL
   dataset3$hour     <- strptime(dataset3$time, format = "%H:%M:%S")
