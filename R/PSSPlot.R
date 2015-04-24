@@ -12,7 +12,8 @@ plot_pss_date <- function(dataset,
                           first_day = NULL, 
                           last_day = NULL, 
                           low_thresh = NULL, 
-                          up_thresh = NULL) {
+                          up_thresh = NULL,
+                          ch = NULL) {
   
   if(is.null(low_thresh)) {
     low_thresh <- 0
@@ -27,7 +28,9 @@ plot_pss_date <- function(dataset,
   if(is.null(last_day)) {
     last_day <- max(dataset$jday, na.rm = TRUE)
   }
-  
+  if(is.null(ch)) {
+    ch <- seq(min(dataset$channel, na.rm = TRUE), max(dataset$channel, na.rm = TRUE), 1)
+  }
   dataset           <- dplyr::filter_(dataset, ~jday >= first_day, ~jday <= last_day)
   dataset$jday      <- NULL
   dataset$date_alt  <- NULL
