@@ -49,7 +49,7 @@ plot_pss_hour <- function(dataset,
   up_dataset1$hour_24  <- substring(up_dataset1$hour, first=12, last=13)
   up_hour_count        <- plyr::ddply(up_dataset1, c("hour_24"), summarize, up_hour = sum(count))  
   
-  dev.new()
+  #dev.new()
   m <- matrix(c(  0,0,0,0,
                   0,1,2,0,
                   0,1,2,0,

@@ -42,7 +42,6 @@ plot_pss_date <- function(dataset,
   
   dataset$date_time <- as.POSIXct(round(dataset$date_time, "hours"))
   
-  dev.new()  
   par(mfrow = c(1, 1), 
       mar = c(2, 2, 2, 2), 
       oma = c(2, 2, 2, 2))

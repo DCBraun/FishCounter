@@ -49,7 +49,7 @@ plot_events <- function(dataset, first_day = NULL, last_day = NULL) {
   hour_channel <- merge(events_hour_channel, up_hour_channel, all  =TRUE)
   hour_channel[is.na(hour_channel)] <- 0
   
-  dev.new()
+  #dev.new()
   par(mfrow = c(length(unique(events_hour1$channel)), 1), 
       mar = c(4, 2, 0.5, 4), 
       oma = c(2, 4, 0.5, 2),
