@@ -52,8 +52,8 @@ bind_signal_data<-function(path_to_folder, site, year, max_signal, rows_rm=NULL)
   
   signal_data5 <- signal_data4[!duplicated(signal_data4[, c(2, 6)]), ]
   
-  signal_data <- signal_data5[signal_data5signal <= max_signal, ]
-  row_rm5     <- signal_data5[signal_data5signal > max_signal, ]
+  signal_data <- signal_data5[signal_data5$signal <=max_signal, ]
+  row_rm5     <- signal_data5[signal_data5$signal > max_signal, ]
   
   signal_data <- signal_data[order(signal_data$time), ]
   
