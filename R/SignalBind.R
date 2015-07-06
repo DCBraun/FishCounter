@@ -5,6 +5,7 @@
 #' @param site Name of the study river.
 #' @param year Year of counter operation.
 #' @param max_signal The maximum signal size.
+#' @param rows_rm Determines whether or not the rows removed are returned. Logical argument, defaults to Null.
 #' @keywords Logie
 #' @export
 
