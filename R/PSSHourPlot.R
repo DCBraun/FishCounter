@@ -7,6 +7,7 @@
 #' @param low_thresh is the counters lower threshold PSS value. Defaults to 0.
 #' @param up_thresh is the counters upper threshold PSS value. Defaults to 130.
 #' @param ch is the channel to be plotted. Defaults to all channels.
+#' @return Generates a plot of peak signal size by hour.
 #' @keywords Events
 #' @export
 

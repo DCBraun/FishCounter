@@ -38,7 +38,7 @@ hist_records <- function(dataset, direction, first_day = NULL, last_day = NULL) 
   d <- dplyr::select(d1, channel, description, signal)
   
   #plot.new()
-  dev.new()
+  #dev.new()
   par(mfrow = c(length(unique(d$channel)), 1), 
       mar = c(4, 3, 1, 1), 
       oma = c(2, 2, 0.5, 0), 
